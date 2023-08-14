@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AboutActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="16dp">
+
+    <ImageView
+        android:id="@+id/about_backbutton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/round_navigate_before_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/foundertext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Meet Our Founder"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tugasakhir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/bottom_background"
+        android:fontFamily="@font/poppins_semibold"
+        android:paddingStart="10sp"
+        android:paddingTop="2sp"
+        android:paddingEnd="10sp"
+        android:paddingBottom="2sp"
+        android:text="Deskripsi Tugas Akhir"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textdeskripsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="140dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="center"
+        android:lineSpacingExtra="2dp"
+        android:text="Tugas Akhir ini membuat Sistem Pemantau Keamanan Gedung Menggunakan RFID Berbasis komunikasi Long Range. Bertujuan untuk membantu bagian Human Resource untuk menilai key performance security. Cara kerjanya ialah apabaila security berhasil tapping menggunakan alat maka data ruangan akan masuk ke Firebase untuk diterima oleh aplikasi android. Alita Security akan menampilkan data ruangan dari tiap masing-masing security"
+        android:textColor="#000000"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/founderimg_01"
+        android:layout_width="220dp"
+        android:layout_height="230dp"
+        android:layout_marginStart="188dp"
+        android:layout_marginTop="232dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/founder1" />
+
+    <TextView
+        android:id="@+id/about_01"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="316dp"
+        android:fontFamily="@font/poppins"
+        android:lineSpacingExtra="3dp"
+        android:padding="8dp"
+        android:text="Saya adalah seorang mahasiswa Politeknik Negeri Jakarta dengan NIM 2003332012 jurusan Teknik Elektro. Dengan menempuh program studi Teknik Telekomunikasi, saya mengerjakan tugas akhir dengan merancang “Aplikasi Sistem Pemantau Patroli Keamanan Gedung Menggunakan RFID Berbasis Komunikasi Long Range (LoRa)”."
+        android:textColor="#000000"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/foundername_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="272dp"
+        android:background="@drawable/bottom_background"
+        android:fontFamily="@font/poppins_semibold"
+        android:paddingStart="10sp"
+        android:paddingTop="2sp"
+        android:paddingEnd="10sp"
+        android:paddingBottom="2sp"
+        android:text="Abelitho Siahaan"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/about_02"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="540dp"
+        android:fontFamily="@font/poppins"
+        android:gravity="end"
+        android:lineSpacingExtra="3dp"
+        android:padding="8dp"
+        android:text="Saya adalah seorang mahasiswa Politeknik Negeri Jakarta dengan NIM 2003332008 jurusan Teknik Elektro. Dengan mengambil program studi Teknik Telekomunikasi, saya membuat tugas akhir dengan merancang “Perancangan Alat Sistem Pemantau Patroli Keamanan Gedung Menggunakan RFID Berbasis Komunikasi Long Range (LoRa)”"
+        android:textColor="#000000"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/founderimg_02"
+        android:layout_width="230dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="484dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/founder2" />
+
+    <TextView
+        android:id="@+id/foundername_02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="240dp"
+        android:layout_marginTop="508dp"
+        android:background="@drawable/bottom_background"
+        android:fontFamily="@font/poppins_semibold"
+        android:paddingStart="10sp"
+        android:paddingTop="2sp"
+        android:paddingEnd="10sp"
+        android:paddingBottom="2sp"
+        android:text="Dandi Kusuma"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="292dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/star" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
