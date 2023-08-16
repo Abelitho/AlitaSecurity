@@ -40,6 +40,9 @@ import java.util.Locale;
 public class AbssenceActivity extends AppCompatActivity implements FetchRecyclerViewItems {
 
     private ActivityAbssenceBinding binding;
+
+    private int todayPosition = -1;
+
     private final SimpleDateFormat sdf = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
     private final Calendar cal = Calendar.getInstance(Locale.ENGLISH);
     private final Calendar currentDate = Calendar.getInstance(Locale.ENGLISH);
@@ -106,6 +109,8 @@ public class AbssenceActivity extends AppCompatActivity implements FetchRecycler
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(binding.recyclerView);
 
+        todayPosition = findTodayPosition();
+
         adapter = new CalendarAdapter((calendarDateModel, position) -> {
             for (int i = 0; i < calendarList2.size(); i++) {
                 calendarList2.get(i).setSelected(i == position);
@@ -117,7 +122,48 @@ public class AbssenceActivity extends AppCompatActivity implements FetchRecycler
         });
 
         binding.recyclerView.setAdapter(adapter);
+
+        if (todayPosition != -1) {
+            binding.recyclerView.scrollToPosition(todayPosition);
+        }
     }
+//    private void setUpCalendar() {
+//        ArrayList<CalendarDateModel> calendarList = new ArrayList<>();
+//        binding.tvDateMonth.setText(sdf.format(cal.getTime()));
+//        Calendar monthCalendar = (Calendar) cal.clone();
+//        int maxDaysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+//        dates.clear();
+//        monthCalendar.set(Calendar.DAY_OF_MONTH, 1);
+//
+//        Calendar currentDateNoTime = Calendar.getInstance(Locale.ENGLISH);
+//        currentDateNoTime.set(Calendar.HOUR_OF_DAY, 0);
+//        currentDateNoTime.set(Calendar.MINUTE, 0);
+//        currentDateNoTime.set(Calendar.SECOND, 0);
+//        currentDateNoTime.set(Calendar.MILLISECOND, 0);
+//
+//        while (dates.size() < maxDaysInMonth) {
+//            Date currentDate = monthCalendar.getTime();
+//
+//            dates.add(currentDate);
+//            CalendarDateModel calendarDateModel = new CalendarDateModel(currentDate, false);
+//            calendarList.add(calendarDateModel);
+//
+//            if (todayPosition == -1 && isSameDay(currentDate, Calendar.getInstance().getTime())) {
+//                todayPosition = dates.size() - 1;
+//            }
+//
+//            monthCalendar.add(Calendar.DAY_OF_MONTH, 1);
+//        }
+//
+//        calendarList2.clear();
+//        calendarList2.addAll(calendarList);
+//        adapter.setData(calendarList);
+//
+//        if (todayPosition != -1) {
+//            binding.recyclerView.scrollToPosition(todayPosition);
+//        }
+//    }
+
     private void setUpCalendar() {
         ArrayList<CalendarDateModel> calendarList = new ArrayList<>();
         binding.tvDateMonth.setText(sdf.format(cal.getTime()));
@@ -126,44 +172,45 @@ public class AbssenceActivity extends AppCompatActivity implements FetchRecycler
         dates.clear();
         monthCalendar.set(Calendar.DAY_OF_MONTH, 1);
 
-        int currentDateIndex = -1;
-
         Calendar currentDateNoTime = Calendar.getInstance(Locale.ENGLISH);
         currentDateNoTime.set(Calendar.HOUR_OF_DAY, 0);
         currentDateNoTime.set(Calendar.MINUTE, 0);
         currentDateNoTime.set(Calendar.SECOND, 0);
         currentDateNoTime.set(Calendar.MILLISECOND, 0);
 
+        // Hitung posisi tanggal hari ini di dalam daftar tanggal
+        int todayPosition = -1;
+
         while (dates.size() < maxDaysInMonth) {
             Date currentDate = monthCalendar.getTime();
+            dates.add(currentDate);
+            CalendarDateModel calendarDateModel = new CalendarDateModel(currentDate, false);
+            calendarList.add(calendarDateModel);
 
-            if (!currentDate.before(currentDateNoTime.getTime())) {
-                dates.add(currentDate);
-                CalendarDateModel calendarDateModel = new CalendarDateModel(currentDate, false);
-                calendarList.add(calendarDateModel);
-
-                if (currentDateIndex == -1 &&
-                        monthCalendar.get(Calendar.YEAR) == currentDateNoTime.get(Calendar.YEAR) &&
-                        monthCalendar.get(Calendar.MONTH) == currentDateNoTime.get(Calendar.MONTH) &&
-                        monthCalendar.get(Calendar.DAY_OF_MONTH) == currentDateNoTime.get(Calendar.DAY_OF_MONTH)) {
-                    currentDateIndex = dates.size() - 1;
-                }
+            // Cek apakah tanggal saat ini sesuai dengan tanggal dalam iterasi
+            if (todayPosition == -1 &&
+                    monthCalendar.get(Calendar.YEAR) == currentDateNoTime.get(Calendar.YEAR) &&
+                    monthCalendar.get(Calendar.MONTH) == currentDateNoTime.get(Calendar.MONTH) &&
+                    monthCalendar.get(Calendar.DAY_OF_MONTH) == currentDateNoTime.get(Calendar.DAY_OF_MONTH)) {
+                todayPosition = dates.size() - 1;
             }
 
             monthCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        if (currentDateIndex != -1) {
-            calendarList.get(currentDateIndex).setSelected(true);
-            selectedDate = dates.get(currentDateIndex);
-        } else {
-            selectedDate = null;
+        // Jika ditemukan posisi tanggal hari ini, set sebagai terpilih
+        if (todayPosition != -1) {
+            calendarList.get(todayPosition).setSelected(true);
+            binding.recyclerView.scrollToPosition(todayPosition);
         }
 
         calendarList2.clear();
         calendarList2.addAll(calendarList);
         adapter.setData(calendarList);
     }
+
+
+
     public void init() {
         elements = new ArrayList<>();
 
@@ -180,12 +227,16 @@ public class AbssenceActivity extends AppCompatActivity implements FetchRecycler
                     String status = dataSnapshot.child("status").getValue(String.class);
                     String roomID = dataSnapshot.child("roomID").getValue(String.class);
                     String time = dataSnapshot.child("time").getValue(String.class);
+                    String date = dataSnapshot.child("date").getValue(String.class);
 
-                    if (userID != null && userID.equals(targetSecurityID)
-                            && selectedDate != null && isSameDay(selectedDate, cal.getTime())
-                            && status != null && status.equals("SUCCESS")) {
-                        DataObject dataObject = new DataObject(userID, status, roomID, time);
-                        elements.add(dataObject);
+                    if (date != null) {
+                        Date parsedDate = parseDateString(date);
+                        if (userID != null && userID.equals(targetSecurityID)
+                                && selectedDate != null && isSameDay(selectedDate, parsedDate)
+                                && status != null && status.equals("SUCCESS")) {
+                            DataObject dataObject = new DataObject(userID, status, roomID, time, date);
+                            elements.add(dataObject);
+                        }
                     }
                 }
 
@@ -209,6 +260,8 @@ public class AbssenceActivity extends AppCompatActivity implements FetchRecycler
         });
     }
 
+
+
     private boolean isSameDay(Date date1, Date date2) {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(date1);
@@ -227,5 +280,24 @@ public class AbssenceActivity extends AppCompatActivity implements FetchRecycler
     @Override
     public void onIntentEmployee(ListElement element) {
 
+    }
+
+    private int findTodayPosition() {
+        for (int i = 0; i < dates.size(); i++) {
+            if (isSameDay(dates.get(i), Calendar.getInstance().getTime())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private Date parseDateString(String dateString) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            return sdf.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

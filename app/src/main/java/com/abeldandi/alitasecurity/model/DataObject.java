@@ -8,15 +8,17 @@ public class DataObject implements Parcelable {
     private String status;
     private String roomID;
     private String time;
+    private String date;
 
     public DataObject() {
     }
 
-    public DataObject(String userID, String status, String roomID, String time) {
+    public DataObject(String userID, String status, String roomID, String time, String date) {
         this.userID = userID;
         this.status = status;
         this.roomID = roomID;
         this.time = time;
+        this.date = date;
     }
 
     public String getUserID() {
@@ -51,6 +53,14 @@ public class DataObject implements Parcelable {
         this.time = time;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -62,6 +72,7 @@ public class DataObject implements Parcelable {
         dest.writeString(status);
         dest.writeString(roomID);
         dest.writeString(time);
+        dest.writeString(date);
     }
 
     protected DataObject(Parcel in) {
@@ -69,6 +80,7 @@ public class DataObject implements Parcelable {
         status = in.readString();
         roomID = in.readString();
         time = in.readString();
+        date = in.readString();
     }
 
     public static final Creator<DataObject> CREATOR = new Creator<DataObject>() {
